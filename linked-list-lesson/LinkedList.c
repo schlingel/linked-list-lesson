@@ -136,42 +136,125 @@ void delete_list(){
 
 }
 int size(){
-    /*returns the number of elements in the list, -1, if empty*/
-    /*dummy implementation*/
-    /*your code here*/
- return 0;
+    list_node aktuell = head;
+    int size = 0;
+
+    while(aktuell != NULL) {
+        size++;
+        aktuell = aktuell->next;
+    }
+
+    return size;
 }
+
 int index_of(primary_type data){
-    /*returns the index of the first occurence of data, or -1 if not found*/
-    /*dummy implementation*/
-    /*your code here*/
- return 0;
+    list_node aktuell = head;
+    int aktuellerIndex = 0;
+    if(head == NULL) {
+        return -1;
+    }
+
+    while(aktuell != NULL) {
+        if(aktuell->item == data) {
+            return aktuellerIndex;
+        }
+
+        aktuellerIndex++;
+    }
+
+    return -1;
 }
 list_node node_at(int n) {
-    /*returns the node at position n in the list, or NULL if not found*/
-    /*dummy implementation*/
-    /*your code here*/
-    return NULL;
+    int curPos = 0;
+    list_node aktuell = head;
 
+    if(head == NULL) {
+        (void)fprintf(stderr, "Die liste ist null!");
+        return NULL;
+    }
+
+    if(n < 0) {
+        (void)fprintf(stderr, "Der Index muss größer gleich 0 sein!");
+        return NULL;
+    }
+
+    while(aktuell != NULL) {
+        if(curPos == n) {
+            return aktuell;
+        }
+
+        curPos++;
+        aktuell = aktuell->next;
+    }
+
+    (void)fprintf(stderr, "Der Index ist nicht innerhalb der Listengröße!");
+    return NULL;
 }
+
+/** function is_empty
+ * Prüft ob die Liste Elemente enthält.
+ * Annahme:
+ *  - Die Datenstruktur wurde ordentlich verwendet
+ */
 int is_empty(){
     /*returns 1, if list has no elements, 0 otherwise*/
-    /*dummy implementation*/
-    /*your code here*/
+    return (head == NULL) ? 1 : 0;
  return 0;
 }
 
 
 void to_front(list_node node){
     /*makes node the head of the list*/
-    /*dummy implementation*/
-    /*your code here*/
+    if(node == NULL) {
+        (void)fprintf(stderr, "to_front akzeptiert keine NULL nodes!");
+        return;
+    }
+
+    if(head == NULL) { // das erste element
+        head = node;
+    }
+    else {
+        node->next = head;
+        head = node;
+    }
+
     return;
 }
+
 list_node select(primary_type a){
     /*returns a list of all elements < a*/
-    /*dummy implementation*/
-    /*your code here*/
-    return NULL;
+    list_node start = (list_node)malloc(sizeof(list_node));
+    list_node aktuellInWerteListe = start;
+    list_node aktuellInListe = head;
+    start->next = NULL; // nötig damit am Ende klar ist ob Elemente gefunden wurden oder nicht.
 
+    if(aktuellInListe == NULL) {
+        return (list_node)NULL; // Keine Elemente da
+    }
+
+    while(aktuellInListe != NULL) {
+        if(aktuellInListe->item < a) {
+                aktuellInWerteListe->item = aktuellInListe->item;
+                aktuellInWerteListe->next =(list_node)malloc(sizeof(list_node));
+                aktuellInWerteListe = aktuellInWerteListe->next;
+        }
+
+        aktuellInListe = aktuellInListe->next;
+    }
+
+    /**
+     * Es wird immer eine node zuviel an Speicher reserviert. So spare ich mir ein if in der Schleife
+     * und der Code wird lesbarer. Dafür muss ich am Ende diese hässliche Überprüfung machen.
+     * Wenn kein Element gefunden wird, wird das eine das am Anfang zu viel reserviert wurde freigegeben
+     * und wenn eins oder mehr Elemente gefunden wurden, wird das im Voraus reservierte Element freigegeben.
+     */
+    if(start->next == NULL) { // es wurden keine Werte gefunden.
+        free(start);
+        return NULL;
+    }
+    else {
+        free(aktuellInWerteListe->next);
+        return start;
+    }
 }
+
