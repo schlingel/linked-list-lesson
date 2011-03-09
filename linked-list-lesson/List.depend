@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1299492244 source:c:\dokumente und einstellungen\tem\eigene dateien\temstuff\fh-technikum wien\ss11\bmr-pad2\demos\03_list\list\main.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+
+1299464705 c:\dokumente und einstellungen\tem\eigene dateien\temstuff\fh-technikum wien\ss11\bmr-pad2\demos\03_list\list\linkedlist.h
+	<stdlib.h>
+
+1299464108 source:c:\dokumente und einstellungen\tem\eigene dateien\temstuff\fh-technikum wien\ss11\bmr-pad2\demos\03_list\list\linkedlist.c
+	"LinkedList.h"
+	<stdio.h>
+	<stdlib.h>
+
